@@ -1,12 +1,19 @@
 <script>
 	import { onMount } from 'svelte';
-	let id;
+	let link;
 	let error = null;
 	let metadata = null;
 
 	async function getVideoMeta() {
 		error = null;
 		metadata = null;
+
+		const id = extactVideoId(link);
+		console.log(id);
+		if (!id) {
+			error = 'Invlaid ID';
+			return;
+		}
 
 		try {
 			const response = await fetch(`api/youtube`, {
@@ -19,6 +26,12 @@
 			error = 'failed to fetch';
 			console.log('failed to fetch', e);
 		}
+	}
+
+	function extactVideoId(url) {
+		const VID_REGEX =
+			/(?:youtube(?:-nocookie)?\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+		return url.match(VID_REGEX)[1];
 	}
 </script>
 
@@ -33,7 +46,7 @@
 	aria-describedby="helper-text-explanation"
 	class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
 	placeholder="e.g. https://www.youtube.com/watch?v=jNQXAC9IVRw"
-	bind:value={id}
+	bind:value={link}
 />
 
 <button type="submit" on:click={getVideoMeta}>Go</button>
