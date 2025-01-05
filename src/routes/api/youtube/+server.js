@@ -6,6 +6,7 @@ import { json } from '@sveltejs/kit';
 export async function POST({ request }) {
 	const { id } = await request.json();
 	console.log('at server: ' + id);
+	console.log('YOTUBE_API_KEY: ' + YOUTUBE_API_KEY);
 	try {
 		const url = `https://www.googleapis.com/youtube/v3/videos?part=contentDetails%2Cid%2Cstatistics%2Csnippet%2Cstatus%2Cplayer&id=${id}&key=${YOUTUBE_API_KEY}`;
 		const response = await fetch(url);
