@@ -18,15 +18,14 @@
 		error = null;
 		metadata = null;
 
-		const id = extactVideoId(link);
-		console.log(id);
-		if (!id) {
-			error = 'Invalid Link';
-			console.log('Invalid link provided');
-			return;
-		}
-
 		try {
+			const id = extactVideoId(link);
+			console.log(id);
+			if (!id) {
+				error = 'Invalid Link';
+				console.log('Invalid link provided');
+				return;
+			}
 			const response = await fetch(`api/youtube`, {
 				method: 'POST',
 				body: JSON.stringify({ id: id })
@@ -34,8 +33,8 @@
 			metadata = await response.json();
 			console.log(metadata);
 		} catch (e) {
-			error = 'failed to fetch';
-			console.log('failed to fetch', e);
+			error = 'Failed to read data: ' + e.toString();
+			console.log('failed to fetch data: ', e);
 		}
 	}
 
@@ -50,7 +49,7 @@
 	}
 </script>
 
-<div class="m-10 flex flex-col items-center justify-center md:px-10">
+<div class="flexflex-col m-10 items-center justify-center p-2 sm:p-3 md:p-4">
 	<h1>
 		Get <span class="bg-gradient-to-r from-sky-400 to-emerald-600 bg-clip-text text-transparent"
 			>Youtube</span
@@ -72,16 +71,35 @@
 	<button
 		type="button"
 		on:click={getVideoMeta}
-		class="mb-2 me-2 rounded-lg bg-blue-700 px-5 py-2.5 text-lg font-medium text-white transition hover:scale-105 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+		class="mb-5 me-2 rounded-lg bg-blue-700 px-5 py-2.5 text-lg font-medium text-white transition hover:scale-105 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
 		>GO</button
 	>
 
 	{#if error}
-		<p class="text-red-700">{error}</p>
+		<div
+			id="alert-border-2"
+			class="mb-4 flex items-center border-t-4 border-red-300 bg-red-50 p-4 text-red-800 dark:border-red-800 dark:bg-gray-800 dark:text-red-400"
+			role="alert"
+		>
+			<svg
+				class="h-4 w-4 flex-shrink-0"
+				aria-hidden="true"
+				xmlns="http://www.w3.org/2000/svg"
+				fill="currentColor"
+				viewBox="0 0 20 20"
+			>
+				<path
+					d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
+				/>
+			</svg>
+			<div class="ms-3 text-sm font-medium">
+				{error}
+			</div>
+		</div>
 	{/if}
 
 	{#if metadata}
-		<div class="max-auto max-w-[var(--size-content-5)] px-5">
+		<div>
 			<div class="my-10">{@html metadata.player.embedHtml}</div>
 			<div class="mb-10">
 				<h3>Thumbnail</h3>
