@@ -2,6 +2,62 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-button {
-    @apply bg-slate-600
+html {
+	scroll-behaviour: smooth;
+}
+
+* {
+	font-family: 'Noto Sans', 'Arial';
+}
+
+h1 {
+	@apply mb-4 text-5xl font-extrabold text-gray-900 md:text-5xl lg:text-6xl dark:text-slate-100;
+}
+
+h2 {
+	@apply mb-3 text-4xl font-extrabold dark:text-white;
+}
+
+h3 {
+	@apply mb-3 text-3xl font-medium dark:text-white;
+}
+
+.meta-table {
+	@apply relative overflow-x-auto rounded-lg shadow-md;
+
+	& table {
+		@apply w-full text-left text-sm text-gray-500 rtl:text-right dark:text-gray-100;
+
+		& caption {
+			@apply bg-white p-5 text-left text-2xl font-semibold text-gray-900 rtl:text-right dark:bg-gray-800 dark:text-white;
+
+			& p {
+				@apply mt-1 text-sm font-normal text-gray-500 dark:text-gray-400;
+			}
+		}
+
+		& thead {
+			@apply bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400;
+
+			& tr {
+				& th {
+					@apply px-6 py-3;
+				}
+			}
+		}
+
+		& tbody {
+			& tr {
+				@apply border-b bg-white dark:border-gray-700 dark:bg-gray-800;
+
+				& th {
+					@apply whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white;
+				}
+
+				& td {
+					@apply px-6 py-4 text-lg;
+				}
+			}
+		}
+	}
 }
